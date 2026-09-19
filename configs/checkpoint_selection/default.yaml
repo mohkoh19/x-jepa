@@ -1,0 +1,76 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - /paths: default
+  - /extras: default
+  - /hydra: default
+  - optional /local: default
+
+task_name: checkpoint_selection
+tags: ["checkpoint-selection", "validation"]
+run_dir: null
+seed: 313
+matmul_precision: medium
+
+selector:
+  checkpoint_path: null
+  checkpoint_epoch: null
+  additional_run_dirs: []
+  write_csv: true
+  print_summary: true
+  primary_tolerance: 0.001
+  output_subdir: checkpoint_selection
+  device: auto
+  strict: false
+  bert_size: auto
+  max_text_len: 64
+  text_batch_size: 256
+  diagnostic_sample_size: 2048
+  aggregate:
+    allow_missing: false
+    metric_weights:
+      coco_val.metrics.mean_recall: 0.50
+      flickr30k_val.metrics.mean_recall: 0.50
+  health:
+    min_embedding_variance: 1.0e-12
+    min_embedding_norm: 1.0e-12
+    max_abs_avg_cosine: 0.999999
+    min_samples_for_collapse_check: 2
+  tasks:
+    coco_val:
+      type: retrieval
+      metric: coco_karpathy
+      setup_stage: validate
+      datamodule:
+        _target_: src.data.coco_karpathy_datamodule.CocoKarpathyRetrievalDataModule
+        annotation_file: ${paths.data_dir}/coco/karpathy_splits/coco_karpathy_val.json
+        image_root: ${paths.data_dir}/coco/images
+        batch_size: 64
+        num_workers: 10
+        pin_memory: true
+        max_words: 64
+        transform:
+          _target_: src.utils.ijepa.transforms.make_eval_transform
+          resize_size: 256
+          crop_size: 224
+    flickr30k_val:
+      type: retrieval
+      metric: flickr30k
+      setup_stage: validate
+      datamodule:
+        _target_: src.data.flickr30k_datamodule.Flickr30KRetrievalDataModule
+        annotation_dir: ${paths.data_dir}/flickr30k/annotations
+        image_root: ${paths.data_dir}/flickr30k/Images
+        batch_size: 128
+        num_workers: 10
+        pin_memory: true
+        max_words: 64
+        train_file: flickr30k_train.json
+        val_file: flickr30k_val.json
+        test_file: flickr30k_test.json
+        eval_split: val
+        val_transform:
+          _target_: src.utils.ijepa.transforms.make_eval_transform
+          resize_size: 256
+          crop_size: 224

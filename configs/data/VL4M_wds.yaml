@@ -1,0 +1,23 @@
+_target_: src.data.VL4M_datamodule.VL4MWebDatasetDatamodule
+train_shards: ${paths.data_dir}/4M_wds/train/vl4m-{000000..005029}.tar
+metadata_path: ${paths.data_dir}/4M_wds/train/dataset.json
+dataset_size: null
+val_frac: 0.1
+batch_size: 512
+val_batch_size: 512
+num_workers: 32
+pin_memory: True
+max_words: 64
+shuffle_buffer: 2000
+shard_shuffle: 1000
+seed: ${seed}
+
+train_transform:
+  _target_: src.utils.ijepa.transforms.make_train_transform
+  crop_size: 224
+  crop_scale: [0.5, 1.0]
+
+val_transform:
+  _target_: src.utils.ijepa.transforms.make_eval_transform
+  resize_size: 256
+  crop_size: 224

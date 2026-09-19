@@ -1,0 +1,40 @@
+_target_: src.models.contrastive_baselines.SigLIP
+
+name: siglip
+ipe_scale: 2.0
+shared_dim: 768
+text_encoder_name: bert-base-uncased
+max_text_len: 64
+
+vision_encoder:
+  source: torchvision
+  architecture: vit_b_16
+  weights: IMAGENET1K_V1
+
+logit_scale_init: 2.302585092994046 # log(10)
+logit_bias_init: -10.0
+logit_scale_max: 100.0
+
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 5e-4
+  betas: [0.9, 0.98]
+  eps: 1e-6
+  weight_decay: 0.01
+
+lr_schedule:
+  type: warmup_cosine
+  final_lr: 1e-6
+
+warmup: 4
+
+lr_groups:
+  vision_encoder:
+    peak_lr: 5e-5
+  text_encoder:
+    peak_lr: 5e-5
+  projection_heads:
+    peak_lr: 5e-4
+  temperature_bias:
+    peak_lr: 5e-4

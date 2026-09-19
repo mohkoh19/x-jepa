@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+  - override /data: svo_probes
+  - override /model: svo_probes_eval
+  - override /trainer: gpu
+
+task_name: eval_svo_probes
+tags: ["svo-probes", "verb", "compositional", "zero-shot"]
+
+trainer:
+  min_epochs: 0
+  max_epochs: 0
+  precision: 32
+  num_sanity_val_steps: 0
+
+evaluation:
+  fit: false
+  validate: true
+  test: false
+  metric_prefix: eval/svo-probes
+  protocol: zeroshot
+  backbone_frozen: true
+  trainable: []
+  selection_split: null
+  final_split: svo_probes
+  image_resolution: 224
+  external_reference: false

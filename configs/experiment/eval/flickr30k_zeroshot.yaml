@@ -1,0 +1,40 @@
+# @package _global_
+
+defaults:
+  - override /data: flickr30k_retrieval
+  - override /model: flickr30k_retrieval_eval
+  - override /trainer: gpu
+
+task_name: eval_flickr30k_zeroshot
+tags: ["flickr30k", "retrieval", "zero-shot"]
+
+trainer:
+  min_epochs: 0
+  max_epochs: 0
+  precision: 32
+  num_sanity_val_steps: 0
+
+evaluation:
+  fit: false
+  validate: false
+  test: true
+  metric_prefix: eval/flickr30k-0s
+  protocol: zeroshot
+  backbone_frozen: true
+  trainable: []
+  selection_split: null
+  final_split: test
+  image_resolution: 224
+  external_reference: false
+
+data:
+  eval_split: test
+
+model:
+  mode: zeroshot
+  protocol: zeroshot
+  freeze_backbone: true
+  max_text_len: 64
+  encoder_source: target
+  validation_metric_prefix: null
+  test_metric_prefix: null

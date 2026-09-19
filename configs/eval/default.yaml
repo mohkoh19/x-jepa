@@ -1,0 +1,31 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - /data: coco_karpathy_retrieval
+  - /model: retrieval_eval
+  - /callbacks: null
+  - /logger: csv
+  - /trainer: gpu
+  - /paths: default
+  - /extras: default
+  - /hydra: default
+  - /experiment: null
+  - optional /local: default
+  - /debug: null
+
+task_name: "eval"
+
+tags: ["evaluation"]
+
+ckpt_path: null
+
+evaluation:
+  fit: false
+  validate: true
+  test: false
+  lightning_ckpt_path: null
+  log_hparams: false
+  metric_prefix: eval
+
+seed: 313

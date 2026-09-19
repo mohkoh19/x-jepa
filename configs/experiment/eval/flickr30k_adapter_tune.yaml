@@ -1,0 +1,51 @@
+# @package _global_
+
+defaults:
+  - override /data: flickr30k_retrieval
+  - override /model: flickr30k_retrieval_eval
+  - override /trainer: gpu
+
+task_name: eval_flickr30k_adapter_tune
+tags: ["flickr30k", "retrieval", "adapter-tune"]
+
+trainer:
+  min_epochs: 10
+  max_epochs: 10
+  check_val_every_n_epoch: 1
+  precision: bf16-mixed
+  num_sanity_val_steps: 0
+  enable_checkpointing: false
+
+evaluation:
+  fit: true
+  validate: false
+  test: true
+  metric_prefix: eval/flickr30k-adapter-tune
+  protocol: retrieval_adapter_tune
+  backbone_frozen: true
+  trainable:
+    ["image_retrieval_adapter", "text_retrieval_adapter", "logit_scale"]
+  selection_metric: val/mean_recall
+  selection_split: val
+  final_split: test
+  image_resolution: 224
+  external_reference: false
+
+data:
+  batch_size: 512
+  num_workers: 16
+  eval_split: test
+
+model:
+  mode: retrieval_adapter_tune
+  protocol: retrieval_adapter_tune
+  freeze_backbone: true
+  projection_dim: 768
+  lr: 1e-3
+  weight_decay: 0.01
+  logit_scale_init: 2.6592
+  max_text_len: 64
+  text_batch_size: 512
+  encoder_source: target
+  validation_metric_prefix: val
+  test_metric_prefix: test

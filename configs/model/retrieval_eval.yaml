@@ -1,0 +1,6 @@
+_target_: src.evaluation.retrieval.RetrievalEvaluator
+ckpt_path: ${ckpt_path}
+bert_size: auto
+max_text_len: 64
+text_batch_size: 256
+score: itc

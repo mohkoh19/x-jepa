@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "Latent Prediction Needs Alignment: A Controlled Study of Joint-Embedding Predictive Vision-Language Learning"
+message: "If you use this software or the released models, please cite the X-JEPA paper."
+type: software
+authors:
+  - family-names: Kohankhaki
+    given-names: Mohammad
+  - family-names: Kusuma
+    given-names: Daniel
+  - family-names: Salehi
+    given-names: Shirin
+  - family-names: Kamp
+    given-names: Carsten
+  - family-names: Brell-Cokcan
+    given-names: Sigrid
+  - family-names: Schmeink
+    given-names: Anke
+repository-code: "https://github.com/mohkoh19/x-jepa"
+license: CC-BY-NC-4.0
+version: 0.1.0
+date-released: 2026-09-18

@@ -1,0 +1,20 @@
+_target_: src.data.nlvr2_datamodule.NLVR2DataModule
+annotation_dir: ${paths.data_dir}/nlvr2
+image_dir: ${paths.data_dir}/nlvr2
+batch_size: 32
+num_workers: 10
+pin_memory: True
+train_file: ["train.json", "train.jsonl"]
+val_file: ["dev.json", "val.json", "dev.jsonl", "val.jsonl"]
+test_file:
+  ["test1.json", "test.json", "test1.jsonl", "test.jsonl", "test2.json"]
+
+train_transform:
+  _target_: src.utils.ijepa.transforms.make_eval_transform
+  resize_size: 256
+  crop_size: 224
+
+val_transform:
+  _target_: src.utils.ijepa.transforms.make_eval_transform
+  resize_size: 256
+  crop_size: 224

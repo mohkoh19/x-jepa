@@ -1,0 +1,42 @@
+# @package _global_
+
+defaults:
+  - override /data: coco_karpathy_retrieval
+  - override /model: retrieval_adapter_eval
+  - override /trainer: gpu
+
+task_name: eval_coco_karpathy_zeroshot
+tags: ["coco", "karpathy", "retrieval", "zero-shot"]
+
+trainer:
+  min_epochs: 0
+  max_epochs: 0
+  precision: 32
+  num_sanity_val_steps: 0
+
+evaluation:
+  fit: false
+  validate: false
+  test: true
+  metric_prefix: eval/coco-0s
+  protocol: zeroshot
+  backbone_frozen: true
+  trainable: []
+  selection_split: null
+  final_split: test
+  image_resolution: 224
+  external_reference: false
+
+data:
+  batch_size: 128
+  eval_split: test
+
+model:
+  metric: coco_karpathy
+  mode: zeroshot
+  protocol: zeroshot
+  freeze_backbone: true
+  max_text_len: 64
+  encoder_source: target
+  validation_metric_prefix: null
+  test_metric_prefix: null

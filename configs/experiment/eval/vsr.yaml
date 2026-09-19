@@ -1,0 +1,29 @@
+# @package _global_
+
+defaults:
+  - override /data: vsr
+  - override /model: vsr_eval
+  - override /trainer: gpu
+
+task_name: eval_vsr
+tags: ["vsr", "spatial", "compositional", "zero-shot"]
+
+trainer:
+  min_epochs: 0
+  max_epochs: 0
+  precision: 32
+  num_sanity_val_steps: 0
+
+evaluation:
+  fit: false
+  validate: true
+  test: false
+  metric_prefix: eval/vsr
+  protocol: zeroshot
+  backbone_frozen: true
+  trainable: []
+  selection_split: null
+  final_split: vsr_test
+  image_resolution: 224
+  external_reference: false
+  threshold: 0.0

@@ -1,0 +1,15 @@
+_target_: src.data.vsr_datamodule.VSRDataModule
+dataset_name: cambridgeltl/vsr_zeroshot
+split: test
+image_root: ${paths.data_dir}/coco/images
+batch_size: 64
+num_workers: 10
+pin_memory: True
+cache_dir: null
+max_samples: null
+skip_missing_images: false
+
+transform:
+  _target_: src.utils.ijepa.transforms.make_eval_transform
+  resize_size: 256
+  crop_size: 224

@@ -1,0 +1,21 @@
+_target_: src.data.flickr30k_datamodule.Flickr30KRetrievalDataModule
+annotation_dir: ${paths.data_dir}/flickr30k/annotations
+image_root: ${paths.data_dir}/flickr30k/Images
+batch_size: 128
+num_workers: 10
+pin_memory: True
+max_words: 64
+train_file: flickr30k_train.json
+val_file: flickr30k_val.json
+test_file: flickr30k_test.json
+eval_split: test
+
+train_transform:
+  _target_: src.utils.ijepa.transforms.make_train_transform
+  crop_size: 224
+  crop_scale: [0.5, 1.0]
+
+val_transform:
+  _target_: src.utils.ijepa.transforms.make_eval_transform
+  resize_size: 256
+  crop_size: 224

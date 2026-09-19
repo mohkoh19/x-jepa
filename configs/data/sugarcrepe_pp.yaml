@@ -1,0 +1,12 @@
+_target_: src.data.sugarcrepe_datamodule.SugarCrepePPDataModule
+annotation_dir: ${paths.data_dir}/scpp
+image_dir: ${paths.data_dir}/coco/images/val2017
+batch_size: 64
+num_workers: 10
+pin_memory: True
+files: null
+
+transform:
+  _target_: src.utils.ijepa.transforms.make_eval_transform
+  resize_size: 256
+  crop_size: 224

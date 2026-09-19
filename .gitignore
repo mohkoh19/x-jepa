@@ -1,0 +1,58 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.installed.cfg
+
+# Tests and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Environments
+.venv
+venv/
+env/
+
+# Editors
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+
+# Run outputs
+/logs/
+/outputs/
+/results/
+/multiruns/
+
+# Hydra run outputs and machine-specific settings
+configs/local/default.yaml
+
+# Datasets and downloaded checkpoints (see scripts/ and docs/data_pipeline.md).
+# configs/checkpoints/ holds the released architecture configs and is tracked.
+/data/
+/checkpoints/
+*.h5
+*.tar
+*.tar.gz
+*.zip
+
+# Container images
+*.sif
+
+# Environment files with secrets
+.env
+.env.*
+!.env.example
+
+# Session tooling
+.codex/

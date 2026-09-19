@@ -1,0 +1,57 @@
+paper:
+  title: "Latent Prediction Needs Alignment: A Controlled Study of Joint-Embedding Predictive Vision-Language Learning"
+  venue: "AACL-IJCNLP 2026"
+  dataset:
+    name: VL4M
+    expected_samples: 5029468
+    source_manifest: "4M_cleaned.json"
+    builder: "scripts/build_vl4m_webdataset.py"
+  checkpoints:
+    repo_id: "mohkoh/x-jepa"
+    downloader: "scripts/download_checkpoints.sh"
+    architecture_configs: "configs/checkpoints"
+
+models:
+  clip:
+    display_name: "CLIP"
+    config: "experiment/pretraining/VL4M_clip"
+    checkpoint: "clip.ckpt"
+  siglip:
+    display_name: "SigLIP"
+    config: "experiment/pretraining/VL4M_siglip"
+    checkpoint: "siglip.ckpt"
+  xjepa_p:
+    display_name: "X-JEPA [P]"
+    config: "experiment/pretraining/VL4M_xjepa_p"
+    checkpoint: "xjepa_p.ckpt"
+  xjepa_tc:
+    display_name: "X-JEPA [TC]"
+    config: "experiment/pretraining/VL4M_xjepa_tc"
+    checkpoint: "xjepa_tc.ckpt"
+  xjepa_pa_lam003:
+    display_name: "X-JEPA [P,A] lambda=0.03"
+    config: "experiment/pretraining/VL4M_xjepa_pa_lam003"
+    checkpoint: "xjepa_pa_lam003.ckpt"
+  xjepa_pa_lam010:
+    display_name: "X-JEPA [P,A] lambda=0.10"
+    config: "experiment/pretraining/VL4M_xjepa_pa_lam010"
+    checkpoint: "xjepa_pa_lam01.ckpt"
+  xjepa_pa_lam030:
+    display_name: "X-JEPA [P,A] lambda=0.30"
+    config: "experiment/pretraining/VL4M_xjepa_pa_lam030"
+    checkpoint: "xjepa_pa_lam03.ckpt"
+  xjepa_pa_lam100:
+    display_name: "X-JEPA [P,A] lambda=1.00"
+    config: "experiment/pretraining/VL4M_xjepa_pa_lam100"
+    checkpoint: "xjepa_pa_lam10.ckpt"
+
+evaluations:
+  - coco_zeroshot
+  - flickr30k_zeroshot
+  - sugarcrepe_pp
+  - svo_probes
+  - vsr
+  - coco_adapter_tune
+  - flickr30k_adapter_tune
+  - nlvr2_token_interaction_probe
+  - nlvr2_global_raw_probe

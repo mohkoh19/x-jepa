@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - /experiment/pretraining/default
+  - override /model: clip
+
+task_name: VL4M_clip
+tags: ["VL4M", "clip", "baseline"]
+
+data:
+  # CLIP/SigLIP tokenize captions inside the model, so the collator only stacks
+  # images and keeps the raw captions.
+  collate_fn:
+    _target_: src.data.collators.CaptionCollator

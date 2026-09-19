@@ -1,0 +1,29 @@
+# Patterns are anchored to the build context root so that source packages such
+# as src/data and src/models are always copied into the image.
+.git
+.github
+.venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.coverage
+.ipynb_checkpoints
+
+# Local data, checkpoints and run outputs
+/data
+/checkpoints
+/logs
+/outputs
+/results
+/multiruns
+
+# Container images and secrets
+/*.sif
+.env
+.env.*
+!.env.example
+
+# Editors and OS files
+.idea
+.vscode
+.DS_Store

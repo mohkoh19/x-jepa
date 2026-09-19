@@ -1,0 +1,7 @@
+defaults:
+  - xjepa_base
+  - _self_
+
+_target_: src.models.xjepa.XJEPA_P
+alignment_lambda: 0.0
+prediction_directions: both

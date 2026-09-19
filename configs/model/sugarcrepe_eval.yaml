@@ -1,0 +1,5 @@
+_target_: src.evaluation.sugarcrepe.SugarCrepeEvaluator
+ckpt_path: ${ckpt_path}
+bert_size: auto
+max_text_len: 64
+score: itc

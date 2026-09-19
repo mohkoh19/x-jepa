@@ -1,0 +1,16 @@
+_target_: src.data.svo_probes_datamodule.SVOProbesDataModule
+dataset_name: MichiganNLP/svo_probes
+split: train
+annotation_file: null
+image_root: ${paths.data_dir}/svo_probes/images
+batch_size: 64
+num_workers: 10
+pin_memory: True
+cache_dir: null
+max_samples: null
+skip_missing_images: true
+
+transform:
+  _target_: src.utils.ijepa.transforms.make_eval_transform
+  resize_size: 256
+  crop_size: 224

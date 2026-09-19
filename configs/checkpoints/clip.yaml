@@ -1,0 +1,38 @@
+# Architecture of the released CLIP baseline checkpoint `clip.ckpt`
+# (https://huggingface.co/mohkoh/x-jepa).  Exported from
+# `experiment/pretraining/VL4M_clip`; edit configs/model/*.yaml instead.
+# @package _global_
+_target_: src.models.contrastive_baselines.CLIP
+name: clip
+ipe_scale: 2.0
+shared_dim: 768
+text_encoder_name: bert-base-uncased
+max_text_len: 64
+vision_encoder:
+  source: torchvision
+  architecture: vit_b_16
+  weights: IMAGENET1K_V1
+logit_scale_init: 2.659260036932778
+logit_scale_max: 100.0
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 0.0005
+  betas:
+  - 0.9
+  - 0.98
+  eps: 1.0e-06
+  weight_decay: 0.01
+lr_schedule:
+  type: warmup_cosine
+  final_lr: 1.0e-06
+warmup: 4
+lr_groups:
+  vision_encoder:
+    peak_lr: 5.0e-05
+  text_encoder:
+    peak_lr: 5.0e-05
+  projection_heads:
+    peak_lr: 0.0005
+  temperature:
+    peak_lr: 0.0005

@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - /experiment/pretraining/default
+  - override /model: xjepa_pa
+
+task_name: VL4M_xjepa_pa
+tags: ["VL4M", "xjepa_pa", "prediction-alignment"]
+
+data:
+  collate_fn:
+    _target_: src.data.collators.XJEPACollator
+    max_text_length: 64
+    tokenizer:
+      _target_: transformers.BertTokenizer.from_pretrained
+      pretrained_model_name_or_path: bert-base-uncased
+      truncation_side: right

@@ -1,0 +1,47 @@
+# @package _global_
+
+defaults:
+  - override /data: nlvr2
+  - override /model: nlvr2_eval
+  - override /trainer: gpu
+
+task_name: eval_nlvr2_token_interaction_probe
+tags: ["nlvr2", "visual-reasoning", "frozen-probe", "token-interaction"]
+
+trainer:
+  min_epochs: 10
+  max_epochs: 10
+  check_val_every_n_epoch: 1
+  precision: bf16-mixed
+  num_sanity_val_steps: 0
+  enable_checkpointing: false
+
+evaluation:
+  fit: true
+  validate: false
+  test: true
+  metric_prefix: eval/nlvr2-token-interaction
+  protocol: token_interaction_frozen_probe
+  backbone_frozen: true
+  trainable: ["token_interaction_transformer", "binary_classifier"]
+  selection_metric: val/acc
+  selection_split: dev
+  final_split: test
+  image_resolution: 224
+  external_reference: false
+
+data:
+  batch_size: 256
+  num_workers: 16
+
+model:
+  mode: token_interaction
+  freeze_backbone: true
+  metric_prefix: ""
+  feature_projection: raw
+  encoder_source: target
+  hidden_dim: 1536
+  dropout: 0.1
+  lr: 1e-4
+  weight_decay: 0.01
+  load_best_val_before_test: true

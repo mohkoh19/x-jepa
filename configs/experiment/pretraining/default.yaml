@@ -1,0 +1,31 @@
+# @package _global_
+defaults:
+  - override /callbacks: pretraining
+  - override /logger: csv
+  - override /trainer: gpu
+  - override /data: VL4M_wds
+
+matmul_precision: medium
+#: Global batch size reported in the paper.  `data.batch_size` below realizes it
+#: on the reported 8-GPU node; on other hardware the runtime derives
+#: `trainer.accumulate_grad_batches` from this value.
+effective_batch_size: 2048
+test: false
+
+trainer:
+  devices: 8
+  num_sanity_val_steps: 0
+  min_epochs: 20
+  max_epochs: 20
+  precision: bf16-mixed
+  use_distributed_sampler: False
+
+data:
+  # 256 x 8 devices = 2048 samples per optimizer step.
+  batch_size: 256
+  num_workers: 32
+
+model:
+  ipe_scale: 2.0
+  warmup: 4
+  max_text_len: 64

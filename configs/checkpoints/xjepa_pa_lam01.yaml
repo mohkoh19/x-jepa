@@ -1,0 +1,73 @@
+# Architecture of the released X-JEPA [P,A] lambda=0.10 checkpoint `xjepa_pa_lam01.ckpt`
+# (https://huggingface.co/mohkoh/x-jepa).  Exported from
+# `experiment/pretraining/VL4M_xjepa_pa_lam010`; edit configs/model/*.yaml instead.
+# @package _global_
+_target_: src.models.xjepa.XJEPA_PA
+ipe_scale: 2.0
+warmup: 4
+unfreeze_last_n: -1
+max_text_len: 64
+alignment_lambda: 0.1
+projection_dim: 768
+projection_hidden_dim: 1024
+prediction_directions: both
+predictor_embed_dim: 384
+predictor_depth: 4
+predictor_num_heads: 2
+predictor_block_impl: sdpa
+text_special_token_ids:
+- 0
+- 100
+- 101
+- 102
+optimizer_groups:
+  encoder:
+    lr_mult: 1.0
+    wd_mult: 1.0
+  prediction_head:
+    lr_mult: 10.0
+    wd_mult: 1.0
+  projection_head:
+    lr_mult: 10.0
+    wd_mult: 1.0
+  temperature:
+    lr_mult: 10.0
+    wd_mult: 0.0
+vis_encoder:
+  _target_: src.models.components.torchvision_vit.torchvision_vit_b_16
+  img_size: 224
+vision_pretrained:
+  source: torchvision
+  id: vit_b_16:IMAGENET1K_V1
+  init_target: copy_online
+  strict: true
+text_encoder:
+  _target_: src.models.components.multimodal_encoder.init_text_encoder
+  size: bert-base-uncased
+  load_pretrained: true
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 5.0e-05
+  weight_decay: 0.01
+  betas:
+  - 0.9
+  - 0.98
+  eps: 1.0e-06
+lr_scheduler_vis:
+  _target_: src.utils.ijepa.schedulers.WarmupCosineSchedule
+  _partial_: true
+  start_lr: 1.0e-06
+  ref_lr: 5.0e-05
+  final_lr: 1.0e-06
+lr_scheduler_text:
+  _target_: src.utils.ijepa.schedulers.WarmupCosineSchedule
+  _partial_: true
+  start_lr: 5.0e-07
+  ref_lr: 5.0e-05
+  final_lr: 1.0e-06
+momentum_scheduler:
+  _target_: src.utils.ijepa.schedulers.MomentumScheduler
+  _partial_: true
+  base_m: 0.996
+  final_m: 1.0

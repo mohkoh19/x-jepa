@@ -1,0 +1,12 @@
+# Multi-GPU data-parallel training.  Set `devices`/`num_nodes` to the available
+# hardware; `effective_batch_size` keeps the global batch size fixed by deriving
+# `accumulate_grad_batches` (see src/utils/runtime.py).
+defaults:
+  - default
+
+strategy: ddp
+
+accelerator: gpu
+devices: 8
+num_nodes: 1
+sync_batchnorm: True

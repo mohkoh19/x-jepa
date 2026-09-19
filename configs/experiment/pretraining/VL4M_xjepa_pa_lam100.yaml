@@ -1,0 +1,9 @@
+# @package _global_
+
+defaults:
+  - /experiment/pretraining/VL4M_xjepa_pa
+  - _self_
+
+task_name: VL4M_xjepa_pa_lam100
+model:
+  alignment_lambda: 1.0

@@ -1,0 +1,19 @@
+_target_: src.data.VL4M_datamodule.VL4MDatamodule
+train_json: ${paths.data_dir}/4M/4M_cleaned.json
+val_json: ${paths.data_dir}/4M/4M_val.json
+root_dir: ${paths.data_dir}
+image_roots: {}
+batch_size: 512
+num_workers: 32
+pin_memory: True
+max_words: 64
+
+train_transform:
+  _target_: src.utils.ijepa.transforms.make_train_transform
+  crop_size: 224
+  crop_scale: [0.5, 1.0]
+
+val_transform:
+  _target_: src.utils.ijepa.transforms.make_eval_transform
+  resize_size: 256
+  crop_size: 224
